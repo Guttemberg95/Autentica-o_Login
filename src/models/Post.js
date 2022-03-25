@@ -10,7 +10,10 @@ const UserSchema = new mongoose.Schema({
         required: true,
     },
 
-});
+},
+{
+    collection: 'posts'
+},);
 
 //const Person = mongoose.model('User', UserSchema);
 

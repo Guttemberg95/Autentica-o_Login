@@ -16,7 +16,10 @@ const UserSchema = new mongoose.Schema({
         required: true
     },
 
-});
+}, 
+{
+    collection: 'people'
+},);
 
 //const Person = mongoose.model('User', UserSchema);
 
