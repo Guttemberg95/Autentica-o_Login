@@ -1,7 +1,9 @@
-const usuariosDao = require('./usuarios-dao');
 const { InvalidArgumentError } = require('../erros');
 const validacoes = require('../validacoes-comuns');
 const bcrypt = require('bcrypt');
+
+const Person = require('../models/Person');
+const ObjectId = require("mongodb").ObjectId;
 
 class Usuario {
   constructor(usuario) {
@@ -18,7 +20,7 @@ class Usuario {
       throw new InvalidArgumentError('O usuário já existe!');
     }
 
-    return usuariosDao.adiciona(this);
+    return Person.create(this);
   }
 
   async adicionaSenha(senha) {
@@ -37,11 +39,11 @@ class Usuario {
 
   
   async deleta() {
-    return usuariosDao.deleta(this);
+    return Person.deleteOne(this);
   }
   
   static async buscaPorId(id) {
-    const usuario = await usuariosDao.buscaPorId(id);
+    const usuario = await Person.findById({ _id: ObjectId(id) });
     if (!usuario) {
       return null;
     }
@@ -50,7 +52,7 @@ class Usuario {
   }
   
   static async buscaPorEmail(email) {
-    const usuario = await usuariosDao.buscaPorEmail(email);
+    const usuario = await Person.findOneAndUpdate(email);
     if (!usuario) {
       return null;
     }
@@ -59,7 +61,7 @@ class Usuario {
   }
 
   static lista() {
-    return usuariosDao.lista();
+    return Person.find();
   }
 
   static gerarSenhaHash(senha) {

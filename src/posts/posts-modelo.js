@@ -1,5 +1,6 @@
-const postsDao = require('./posts-dao');
 const validacoes = require('../validacoes-comuns');
+const ObjectId = require("mongodb").ObjectId;
+const Postt = require('../models/Post');
 
 class Post {
   constructor(post) {
@@ -9,7 +10,7 @@ class Post {
   }
 
   adiciona() {
-    return postsDao.adiciona(this);
+    return Postt.create(this);
   }
 
   valida() {
@@ -21,7 +22,7 @@ class Post {
   }
 
   static lista() {
-    return postsDao.lista();
+    return Postt.find();
   }
 }
 

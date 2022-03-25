@@ -2,6 +2,9 @@ const Usuario = require('./usuarios-modelo');
 const { InvalidArgumentError, InternalServerError } = require('../erros');
 const jwt = require('jsonwebtoken');
 
+const ObjectId = require("mongodb").ObjectId;
+const Person = require('../models/Person');
+
 function criaTokenJWT(usuario) {
     const payload = {
       id: usuario.id
@@ -19,7 +22,7 @@ module.exports = {
     try {
       const usuario = new Usuario({
         nome,
-        email,
+        email
       });
 
       await usuario.adicionaSenha(senha);

@@ -7,6 +7,9 @@ const { InvalidArgumentError } = require('../erros');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+const ObjectId = require("mongodb").ObjectId;
+const Person = require('../models/Person');
+
 function verificarUsuario(usuario) {
     if (!usuario) {
         throw new InvalidArgumentError('Não existe usuário com esse email');
@@ -27,9 +30,8 @@ passport.use(
         session: false
     }, async (email, senha, done) => {
         try {    
-        const usuario = await Usuario.buscaPorEmail(email);
+        const usuario = await Person.findOne({email});
         verificarUsuario(usuario);       
-        console.log(usuario.senhaHash);
         await verificarSenha(senha, usuario.senhaHash);
 
         done(null, usuario);
