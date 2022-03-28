@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose')
 const { estrategiasAutenticacao } = require('./src/usuarios');
+var cors = require('cors')
 
 app.use(
   bodyParser.urlencoded({
@@ -11,6 +12,8 @@ app.use(
 );
 
 app.use(express.json());
+
+app.use(cors())
 
 const DB_USER=process.env.DB_USER
 const DB_PASSWORD= encodeURIComponent(process.env.DB_PASSWORD)
@@ -22,7 +25,7 @@ mongoose
 )
 .then(() =>{
     console.log('conectamos ao mongoBD')
-    app.listen(3001)
+    app.listen(3003)
 })
 .catch((err) => console.log(err))
 
