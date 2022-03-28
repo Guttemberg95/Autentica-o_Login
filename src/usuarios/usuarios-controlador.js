@@ -17,12 +17,18 @@ function criaTokenJWT(usuario) {
 
 module.exports = {
   adiciona: async (req, res) => {
-    const { nome, email, senha } = req.body;
+    const { nome, email, senha, telefone, genero, data_nascimento, endereco, cidade, estado } = req.body;
 
     try {
       const usuario = new Usuario({
         nome,
-        email
+        email,
+        telefone,
+        genero,
+        data_nascimento,
+        endereco,
+        cidade,
+        estado
       });
 
       await usuario.adicionaSenha(senha);
@@ -66,6 +72,16 @@ module.exports = {
     try {
       await usuario.deleta();
       res.status(200).send();
+    } catch (erro) {
+      res.status(500).json({ erro: erro });
+    }
+  },
+
+  lista_email: async (req, res) => {
+    const usuario = await Usuario.buscaPorEmail(req.params.email);
+
+    try {
+      res.status(200).send(usuario);
     } catch (erro) {
       res.status(500).json({ erro: erro });
     }

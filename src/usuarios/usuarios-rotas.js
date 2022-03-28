@@ -22,6 +22,10 @@ module.exports = app => {
     .get(usuariosControlador.lista);
 
   app
+    .route('/usuario/:email')
+    .get(usuariosControlador.lista_email);
+  
+  app
   .route('/usuario/:id')
   .delete(
     middlewaresAutenticacao.bearer,

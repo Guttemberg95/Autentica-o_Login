@@ -11,6 +11,12 @@ class Usuario {
     this.nome = usuario.nome;
     this.email = usuario.email;
     this.senhaHash = usuario.senhaHash;
+    this.telefone = usuario.telefone;
+    this.genero = usuario.genero;
+    this.data_nascimento = usuario.data_nascimento;
+    this.cidade = usuario.cidade;
+    this.estado = usuario.estado;
+    this.endereco = usuario.endereco;
 
     this.valida();
   }
@@ -52,7 +58,7 @@ class Usuario {
   }
   
   static async buscaPorEmail(email) {
-    const usuario = await Person.findOneAndUpdate(email);
+    const usuario = await Person.findOne({email: email});
     if (!usuario) {
       return null;
     }
