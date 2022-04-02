@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose')
 const { estrategiasAutenticacao } = require('./src/usuarios');
+
 var cors = require('cors')
 
 app.use(
@@ -17,7 +18,6 @@ app.use(cors())
 
 const DB_USER=process.env.DB_USER
 const DB_PASSWORD= encodeURIComponent(process.env.DB_PASSWORD)
-
 
 mongoose
 .connect(

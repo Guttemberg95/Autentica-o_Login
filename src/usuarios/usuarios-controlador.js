@@ -5,6 +5,9 @@ const jwt = require('jsonwebtoken');
 const ObjectId = require("mongodb").ObjectId;
 const Person = require('../models/Person');
 
+const crypto = require('crypto');
+const moment = require('moment');
+
 function criaTokenJWT(usuario) {
     const payload = {
       id: usuario.id
@@ -13,6 +16,13 @@ function criaTokenJWT(usuario) {
     const token = jwt.sign(payload, process.env.Chave_JWT, { expiresIn: '15m' });
     return token;
 
+}
+
+function criaRefreshToken(usuario) {
+  const refresh_token =  crypto.randomBytes(24).toString('hex');
+  const dataExperiracao = moment().add(5, 'd').unix();
+  
+  return refresh_token;
 }
 
 module.exports = {
@@ -49,8 +59,9 @@ module.exports = {
 
   login: (req, res) => {
     const token = criaTokenJWT(req.user);
+    const refreshToken = criaRefreshToken(req.user);
     res.set('Authorization', token);
-    res.status(204).send();
+    res.status(200).send({ refreshToken });
   },
 
   logout: async (req, res) => {
